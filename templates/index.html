@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Klasifikasi Sentimen Kesehatan Mental</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        max-width: 700px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #f8f9fa;
+        color: #333;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      textarea {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        resize: none;
+      }
+      button {
+        padding: 12px 25px;
+        margin-top: 10px;
+        background-color: #007bff;
+        border: none;
+        color: white;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .result {
+        margin-top: 20px;
+        font-weight: bold;
+        background-color: #fff;
+        padding: 12px;
+        border-radius: 8px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      }
+      .progress {
+        width: 100%;
+        background-color: #eee;
+        border-radius: 10px;
+        margin-top: 10px;
+        overflow: hidden;
+      }
+      .bar {
+        padding: 8px;
+        color: white;
+        text-align: center;
+      }
+      .positive {
+        width: 90%;
+        background-color: #28a745;
+      }
+      .neutral {
+        width: 60%;
+        background-color: #ffc107;
+      }
+      .negative {
+        width: 80%;
+        background-color: #dc3545;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Klasifikasi Sentimen Kesehatan Mental</h2>
+    <form action="/predict" method="post">
+      <textarea
+        name="input_text"
+        rows="4"
+        placeholder="Tulis kalimat di sini... (Bahasa Inggris)"
+      >
+{{ input_text }}</textarea
+      ><br />
+      <button type="submit">Klasifikasi</button>
+    </form>
+
+    {% if prediction_text %}
+    <div class="result">{{ prediction_text }}</div>
+    {% endif %} {% if sentiment_text %}
+    <div class="result">Sentimen Umum: {{ sentiment_text }}</div>
+    <div class="progress">
+      {% if sentiment_text == 'Positif' %}
+      <div class="bar positive">Positif</div>
+      {% elif sentiment_text == 'Negatif' %}
+      <div class="bar negative">Negatif</div>
+      {% else %}
+      <div class="bar neutral">Netral</div>
+      {% endif %}
+    </div>
+    {% endif %} {% if insight_text %}
+    <div class="result"><strong>Insight:</strong> {{ insight_text }}</div>
+    {% endif %} {% if recommendation_text %}
+    <div class="result">
+      <strong>Rekomendasi:</strong> {{ recommendation_text }}
+    </div>
+    {% endif %}
+  </body>
+</html>
